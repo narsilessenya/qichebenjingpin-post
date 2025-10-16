@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔚来汽车官方微博传播策略分析报告</title>
+    <style>
+        :root {
+            --primary-color: #003E6A; /* 蔚来蓝 */
+            --secondary-color: #00B5E2; /* 蔚来天蓝 */
+            --text-color: #333;
+            --light-gray: #f4f7f6;
+            --border-color: #e0e0e0;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --font-main: 'Helvetica Neue', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft Yahei', sans-serif;
+        }
+        body {
+            font-family: var(--font-main);
+            line-height: 1.8;
+            color: var(--text-color);
+            margin: 0;
+            background-color: var(--light-gray);
+            font-size: 16px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.2em;
+            margin: 0;
+        }
+        header p {
+            color: #666;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        .section {
+            background-color: #fff;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        .section-title {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+        
+        /* 1. 整体分析 & 关键策略: 竖着排列的卡片样式 */
+        .analysis-card, .strategy-card {
+            background-color: var(--light-gray);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        .analysis-card:last-child, .strategy-card:last-child {
+            margin-bottom: 0;
+        }
+        .analysis-card h3, .strategy-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        .strategy-card h5 {
+            color: var(--primary-color);
+            opacity: 0.8;
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .strategy-card ul {
+             padding-left: 20px;
+             margin: 0;
+        }
+         .strategy-card a, .analysis-card a {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .strategy-card a:hover, .analysis-card a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* 2. 切换按钮 */
+        .view-toggle {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .toggle-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .toggle-btn:hover {
+            background-color: #005a8c;
+        }
+        .toggle-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* 表格视图 */
+        .table-view {
+            display: none; /* Initially hidden */
+            overflow-x: auto;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .report-table th, .report-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .report-table th {
+            background-color: var(--light-gray);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .report-table td ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        /* 3. 横向时间轴 */
+        .timeline-wrapper {
+            overflow-x: auto;
+            padding-bottom: 20px;
+            cursor: grab;
+        }
+        .timeline-wrapper:active {
+            cursor: grabbing;
+        }
+        .timeline {
+            display: flex;
+            position: relative;
+            padding: 20px 0 40px 0;
+            min-width: fit-content; /* Ensure container expands with content */
+        }
+        .timeline::before { /* The horizontal line */
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 40px;
+            right: 40px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        .timeline-item {
+            position: relative;
+            flex: 0 0 380px; /* Width of each item */
+            padding: 0 20px;
+        }
+        .timeline-dot {
+            position: absolute;
+            top: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 15px;
+            background-color: #fff;
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-align: center;
+            padding-top: 30px; /* Position above the content card */
+        }
+        .timeline-content {
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .timeline-content h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+        .timeline-links ul {
+            padding-left: 20px;
+            margin: 10px 0 0;
+        }
+        .timeline-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .timeline-links a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        /* 4. 时间轴图片 */
+        .timeline-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>蔚来汽车官方微博传播策略分析报告</h1>
+            <p>基于 2024年10月 - 2025年10月 微博内容</p>
+        </header>
+
+        <main>
+            <!-- Section 1: 整体分析 -->
+            <section class="section" id="overall-analysis">
+                <h2 class="section-title">一、整体分析</h2>
+                <div id="analysis-container">
+                    <!-- Cards will be injected here -->
+                </div>
+            </section>
+
+            <!-- Section 2: 传播事件时间表 -->
+            <section class="section" id="timeline-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="section-title" style="margin-bottom: 0;">二、传播事件时间表</h2>
+                    <div class="view-toggle">
+                        <button id="toggle-view-btn" class="toggle-btn">切换为表格视图</button>
+                    </div>
+                </div>
+
+                <div class="timeline-wrapper" id="timeline-view">
+                    <div class="timeline" id="timeline-container">
+                        <!-- Timeline items will be injected here by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="table-view" id="table-view">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>主题</th>
+                                <th>时间区间</th>
+                                <th>描述</th>
+                                <th>相关链接</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Table rows will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 3: 关键传播策略亮点 -->
+            <section class="section" id="strategy-highlights">
+                <h2 class="section-title">三、关键传播策略亮点</h2>
+                <div id="strategy-container">
+                    <!-- Strategy cards will be injected here -->
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>报告生成于 &copy; <span id="year"></span>. </p>
+        </footer>
+    </div>
+
+    <!-- Main Logic -->
+    <script>
+        const reportData = {
+            "一、整体分析": {
+                "概述": "蔚来在微博平台的传播呈现出高端、科技、用户导向三大核心特点。内容风格精致、现代化，视觉呈现多采用高质量的图片与视频，强调设计感与生活美学。其目标受众定位为追求高品质生活、认同科技创新、并重视社群归属感的都市精英和年轻家庭。蔚来不仅将微博作为产品信息发布的渠道，更致力于将其打造成一个品牌文化输出、用户关系维护和生活方式倡导的综合性平台，通过构建“用户企业”的独特叙事，强化用户粘性与品牌忠诚度。",
+                "传播节奏": "蔚来的微博发布频率非常高，通常保持每日1-3条的更新节奏，周末及节假日亦不间断。内容发布时间覆盖早、中、晚多个时段，并通过#周一加电#、#来电周末#等固定栏目，形成规律性的传播节点。在重大事件如NIO Day、新车发布、车展期间，内容密度会显著提升，通过多角度、多形式的直播、图文、视频进行饱和式传播，形成强大的声量波峰。整体传播节奏张弛有度，既有日常的品牌温度维系，也有关键节点上的集中爆发。",
+                "传播方向": "蔚来的传播方向主要聚焦于四大核心支柱：\n1. **技术领导力与产品实力**: 深度解读ET9等旗舰车型的“黑科技”，如天行智能底盘、900V高压架构、智能系统等，塑造行业技术引领者形象。\n2. **全场景补能服务体系**: 持续沟通换电站网络的建设成就（如高速千站计划、G318川藏线贯通），将“加电比加油更方便”从口号落实为可感知的用户利益，构筑品牌核心护城河。\n3. **用户社区与高端生活方式**: 通过分享车主故事、跨界合作（如与BURTON、LEMMO联名）、以及蔚来创意官/NIO Phone用户摄影作品展示，将品牌与滑雪、骑行、旅行、艺术等多元化高端生活方式深度绑定，强化用户社群文化。\n4. **品牌里程碑与重大事件营销**: 围绕NIO Day年度发布会、品牌十周年、财报发布等关键节点，进行整合营销传播，展现企业实力与未来愿景，提振市场与用户信心。"
+            },
+            "二、传播事件时间表": [
+                {
+                    "主题": "深化用户口碑，分享购车及用车经验",
+                    "描述": "通过发布真实车主访谈、用车攻略分享等内容，邀请“过来人”现身说法，解答潜在用户的购车疑虑，内容覆盖补能便利性、用车成本、智能化体验等多个维度，旨在通过真实口碑增强品牌说服力与亲和力。",
+                    "时间区间": "2024-11-08 - 2024-11-13",
+                    "相关链接": [
+                        "[听蔚来用户分享满满干货](https://m.weibo.cn/detail/5100310311997613)",
+                        "[听蔚来车主分析补能焦虑问题](https://m.weibo.cn/detail/5098488691427117)"
+                    ]
+                },
+                {
+                    "主题": "亮相2024广州车展，线上直播预热",
+                    "描述": "为即将在广州举办的年度重要车展进行预热，通过发起线上直播活动，由产品专家带领用户“云逛车展”，提前探馆蔚来展台的技术和产品亮点，制造悬念，吸引用户关注。",
+                    "时间区间": "2024-11-13",
+                    "相关链接": [
+                        "[云逛2024广州车展，蔚来展台8大亮点抢先看](https://m.weibo.cn/detail/5100378707725933)"
+                    ]
+                },
+                {
+                    "主题": "蔚来品牌成立十周年庆典系列活动",
+                    "描述": "为庆祝品牌成立十周年，蔚来策划了线上线下系列庆祝活动。线上通过发布纪念海报、在纽约时代广场点亮大屏、发起互动抽奖等形式，与全球用户共庆。同时，特别推出2024款ES8十周年纪念套装，将品牌里程碑与产品销售相结合，感恩用户同行。",
+                    "时间区间": "2024-11-25 - 2024-11-27",
+                    "相关链接": [
+                        "[ES8十周年纪念套装发布](https://m.weibo.cn/detail/5104539846052933)",
+                        "[十周年线上线下活动开启](https://m.weibo.cn/detail/5104555412948085)",
+                        "[纽约时代广场点亮大屏庆祝十周年](https://m.weibo.cn/detail/5105356604965086)"
+                    ]
+                },
+                {
+                    "主题": "携手女篮运动员杨舒予，传递年轻活力形象",
+                    "描述": "宣布女篮运动员杨舒予成为蔚来ET5T车主，通过明星车主的身份，将ET5T车型与年轻、活力、赛场激情和潮流生活方式相联系，吸引年轻消费群体的关注，提升品牌在运动圈层的影响力。",
+                    "时间区间": "2024-12-04",
+                    "相关链接": [
+                        "[欢迎女篮运动员杨舒予成为蔚来车主](https://m.weibo.cn/detail/5107900252947573)"
+                    ]
+                },
+                {
+                    "主题": "NIO Day 2024年度发布会暨ET9旗舰车型发布",
+                    "描述": "围绕年度最重磅的品牌日NIO Day 2024进行全方位、多节奏的整合传播。前期通过发布会预告、主题曲《同行吧》、创始人亲自出镜进行极限测试等内容层层预热；活动当天进行多平台同步直播，正式发布智能电动行政旗舰ET9及其“十五大黑科技”，并公布售价，引爆全网关注。",
+                    "时间区间": "2024-12-16 - 2024-12-21",
+                    "相关链接": [
+                        "[ET9先进数字架构发布会预告](https://m.weibo.cn/detail/5112195184853936)",
+                        "[NIO Day 2024主题曲《同行吧》发布](https://m.weibo.cn/detail/5112147476746034)",
+                        "[蔚来创始人李斌亲测ET9爆胎稳定性](https://m.weibo.cn/detail/5113657566429989)",
+                        "[NIO Day 2024开幕倒计时](https://m.weibo.cn/detail/5114080270224940)"
+                    ]
+                },
+                {
+                    "主题": "携手单板滑雪品牌BURTON，打造冰雪生活方式",
+                    "描述": "蔚来与全球知名单板滑雪品牌BURTON进行深度跨界合作，以#灵感激发雪无止境#为主题，将EC6车型与滑雪运动场景深度融合。通过发布联名视频、举办线下体验活动、推出联名周边等方式，精准触达热爱户外运动的高端用户圈层，强化EC6“玩雪好搭紫”的产品形象，倡导潮流、自由的冬季生活方式。",
+                    "时间区间": "2024-12-17 - 2025-01-14",
+                    "相关链接": [
+                        "[EC6 “移动暖房”滑雪体验](https://m.weibo.cn/detail/5112630665021659)",
+                        "[EC6 尾翼与滑雪的Cool姿态](https://m.weibo.cn/detail/5112996005151369)",
+                        "[EC6和BURTON打造滑雪新拍档直播](https://m.weibo.cn/detail/5121006845039218)"
+                    ]
+                },
+                {
+                    "主题": "行政旗舰ET9“黑科技”深度解读系列传播",
+                    "描述": "在ET9发布后，持续进行长线的“黑科技”解读传播。通过图文长文、短视频、直播品鉴会、KOL体验等多种形式，逐一拆解ET9的十五大核心技术亮点，如天行智能底盘、全域900V高压架构、旗舰智能系统、行政级静谧空间、百变行政桌案等。同时，在全国蔚来中心开启巡回静态体验，邀请用户近距离感受产品创新魅力，维持产品热度，深度触达核心潜客。",
+                    "时间区间": "2025-01-06 - 2025-09-23",
+                    "相关链接": [
+                        "[ET9十五大黑科技全面揭秘](https://m.weibo.cn/detail/5136084038320211)",
+                        "[ET9天行智能底盘品鉴会直播](https://m.weibo.cn/detail/5145982627480335)",
+                        "[ET9全国巡回静态体验开启](https://m.weibo.cn/detail/5131850328318090)",
+                        "[ET9旗舰驾乘体验直播](https://m.weibo.cn/detail/5154207809146013)"
+                    ]
+                },
+                {
+                    "主题": "新春整合营销：明星合作、IP互动与服务保障",
+                    "描述": "围绕中国最重要的传统节日——春节，蔚来展开了一系列整合营销活动。包括与歌手腾格尔合作推广歌曲《千里换一回》，推出“贪吃蛇”互动小游戏，发布创始人拜年视频，并重点宣传春节期间服务不打烊的保障政策，将品牌营销与节日氛围、用户返乡场景紧密结合，传递品牌温度。",
+                    "时间区间": "2025-01-20 - 2025-02-01",
+                    "相关链接": [
+                        "[“贪吃蛇”新春互动游戏](https://m.weibo.cn/detail/5124831051777359)",
+                        "[春节出行服务保障与贴士](https://m.weibo.cn/detail/5125688179558219)",
+                        "[与歌手腾格尔合作推广](https://m.weibo.cn/detail/5125903174598666)",
+                        "[蛇年新春5年0息购车活动](https://m.weibo.cn/detail/5129219938713865)"
+                    ]
+                },
+                {
+                    "主题": "权威背书，强化智能安全技术领先形象",
+                    "描述": "通过直播、长图文等形式，重点传播蔚来智能安全辅助系统获得中国人保、中国太保等四大保险公司联合认证的行业事件。邀请保险行业专家进行对话，深入解读蔚来智能安全技术（如AES自动紧急避让）如何有效降低事故风险，从第三方权威视角为蔚来的技术实力和产品安全性进行背书。",
+                    "时间区间": "2025-02-12 - 2025-03-21",
+                    "相关链接": [
+                        "[直播：ET7为何获四大保险公司点赞](https://m.weibo.cn/detail/5133297586539531)",
+                        "[直播：对话保险公司，探讨智能安全价值](https://m.weibo.cn/detail/5146588605055330)"
+                    ]
+                },
+                {
+                    "主题": "跨界游戏IP，EP9登陆《极品飞车》",
+                    "描述": "宣布品牌旗下的传奇电动超跑EP9正式登陆知名赛车游戏《极品飞车集结》，通过游戏这一数字化场景，让更多年轻用户和车迷能够“亲身体验”EP9的极致性能，将品牌图腾与赛道激情、虚拟娱乐深度绑定，扩大品牌在年轻潮流圈层的影响力。",
+                    "时间区间": "2025-03-17",
+                    "相关链接": [
+                        "[蔚来EP9登陆《极品飞车集结》](https://m.weibo.cn/detail/5145253715903551)"
+                    ]
+                },
+                {
+                    "主题": "多品牌矩阵亮相2025上海车展",
+                    "描述": "蔚来首次以NIO蔚来、ONVO乐道、firefly萤火虫三大品牌矩阵的形式亮相上海车展。通过展前预热、新闻发布会直播、多场技术主题圆桌分享等系列活动，全面展示公司在不同细分市场的战略布局和全栈自研的技术实力，向外界传递“创领新境”的品牌愿景和企业发展信心。",
+                    "时间区间": "2025-04-22 - 2025-04-26",
+                    "相关链接": [
+                        "[宣布携三大品牌亮相上海车展](https://m.weibo.cn/detail/5158341245144641)",
+                        "[蔚来与萤火虫展台新闻发布会](https://m.weibo.cn/detail/5158502922453930)",
+                        "[技术对话直播：未来座舱](https://m.weibo.cn/detail/5158925818658890)"
+                    ]
+                },
+                {
+                    "主题": "新款ET5及ET5T上市发布",
+                    "描述": "通过线上发布会的形式，正式推出新款ET5和ET5T。传播核心聚焦于“质感焕新”，通过直播讲解、海报宣传等方式，向用户介绍新车型在设计、性能、智能化等方面的升级点，并公布售价和购车权益。",
+                    "时间区间": "2025-05-23 - 2025-05-26",
+                    "相关链接": [
+                        "[新ET5/ET5T上市发布会直播预约](https://m.weibo.cn/detail/5169434998341972)",
+                        "[上市发布倒计时](https://m.weibo.cn/detail/5169525554153574)",
+                        "[上市后产品海报宣传](https://m.weibo.cn/detail/5170476822823521)"
+                    ]
+                },
+                {
+                    "主题": "跨界智能出行品牌LEMMO，拓展4+2生活方式",
+                    "描述": "蔚来与德国智能短途出行品牌LEMMO合作，推出Zero碳纤维智能折叠电单车。通过线上直播发布、线下门店试骑等活动，将蔚来汽车（4轮）与电单车（2轮）相结合，倡导“4+2”的都市出行新风尚，拓展品牌在生活方式领域的布局，精准触达追求潮流与便利性的都市人群。",
+                    "时间区间": "2025-06-20 - 2025-08-27",
+                    "相关链接": [
+                        "[蔚来与LEMMO合作发布直播](https://m.weibo.cn/detail/5179613262381755)",
+                        "[Lemmo折叠自行车线下试骑开启](https://m.weibo.cn/detail/5204275431213305)"
+                    ]
+                },
+                {
+                    "主题": "高速换电千站计划达成，解决高速补能焦虑",
+                    "描述": "围绕“蔚来建成1000座高速公路换电站”这一里程碑事件进行集中传播。通过倒计时海报、上线仪式直播、发布总结视频等形式，宣告“蔚来乐道用户高速补能焦虑终结”。此举旨在将蔚来换电网络的核心优势具象化、里程碑化，强力回应市场对于电动车长途出行的核心痛点，巩固品牌护城河。",
+                    "时间区间": "2025-07-05 - 2025-07-10",
+                    "相关链接": [
+                        "[千站达成倒计时4天](https://m.weibo.cn/detail/5184987808662127)",
+                        "[第1000座高速换电站上线直播](https://m.weibo.cn/detail/5186492924429560)",
+                        "[千站计划达成总结视频](https://m.weibo.cn/detail/5186840958339692)"
+                    ]
+                },
+                {
+                    "主题": "“一路换电到珠峰”G318川藏线换电网络贯通",
+                    "描述": "通过沿途换电站（如左贡、理塘站）的上线运营和全程换电直播活动，宣告G318川藏线的换电网络正式贯通。将蔚来强大的补能网络与极具挑战和象征意义的“进藏路线”相结合，直观展示蔚来车辆与服务体系能够支持用户去往任何“诗与远方”，是对应急场景下补能能力的极致证明。",
+                    "时间区间": "2025-06-30 - 2025-08-15",
+                    "相关链接": [
+                        "[G318左贡换电站上线](https://m.weibo.cn/detail/5183203985589984)",
+                        "[G318理塘换电站上线](https://m.weibo.cn/detail/5196946270848221)",
+                        "[全程换电到珠峰直播](https://m.weibo.cn/detail/5199905807404272)"
+                    ]
+                },
+                {
+                    "主题": "全新ES8发布及上市系列营销",
+                    "描述": "全新ES8的上市传播分为多个阶段：首先通过线上技术发布会深度解析产品力并开启预售；随后亮相成都车展，进行线下实车展示和传播扩散；最后在NIO Day 2025上，联合首席体验官莫文蔚正式宣布上市，并开启交付。整个过程节奏紧凑，通过技术解读、车展曝光、媒体试驾、明星合作等多种手段，层层递进，将产品“全场景科技旗舰”的定位深入人心。",
+                    "时间区间": "2025-08-14 - 2025-10-02",
+                    "相关链接": [
+                        "[全新ES8产品技术发布会预告](https://m.weibo.cn/detail/5199491713994423)",
+                        "[2025成都车展蔚来展台直播](https://m.weibo.cn/detail/5204911264634382)",
+                        "[宣布首席体验官莫文蔚](https://m.weibo.cn/detail/5212664940204137)",
+                        "[全新ES8底盘实力专业测试场实测直播](https://m.weibo.cn/detail/5217275054396199)"
+                    ]
+                },
+                {
+                    "主题": "系列化直播栏目，深度体验产品与技术",
+                    "描述": "蔚来打造了《蔚来会客厅》、《蔚来现场》、工厂慢直播等系列化直播栏目。内容涵盖产品功能深度体验（如ES6智慧安全驾校、ET5漂移模式）、技术解析（如神玑安全影像）、生产制造探秘（如工厂慢直播看电池安装）、用户故事分享等。通过常规化、系列化的直播，将专业知识以更生动、直观的方式传递给用户，建立品牌与用户之间深度沟通的桥梁。",
+                    "时间区间": "2024-10-31 - 2025-10-02",
+                    "相关链接": [
+                        "[《蔚来会客厅》：探索程序员工作生活](https://m.weibo.cn/detail/5092585500840196)",
+                        "[工厂慢直播：探秘蔚来智能工厂“妆造时刻”](https://m.weibo.cn/detail/5140524307580907)",
+                        "[产品体验直播：新ES6智慧安全驾校11项科目大挑战](https://m.weibo.cn/detail/5197086419058744)",
+                        "[技术解析直播：ET9神玑安全影像补盲能力](https://m.weibo.cn/detail/5196700936306907)"
+                    ]
+                }
+            ],
+            "三、关键传播策略亮点": [
+                {
+                    "传播策略标题": "“用户企业”叙事与社区共创生态",
+                    "传播策略概述": "蔚来超越了传统的汽车品牌传播模式，将“用户企业”理念贯穿始终。其策略核心在于不仅仅是单向输出品牌信息，而是与用户共同创造内容、分享价值、构建一个有归属感的社区生态。这不仅提升了用户粘性，更将用户转化为了品牌最强大的传播者。",
+                    "执行手法": "1. **用户故事官方化**：常态化运营[#拥有蔚来的第N天#](https://m.weibo.cn/detail/5141168703409297)等话题，精选并官方转发用户的真实用车故事和生活分享，如[蔚来ES8的南疆之旅](https://m.weibo.cn/detail/5093363351293484)，让普通用户的体验成为品牌叙事的一部分，极具真实感和感染力。\n2. **UGC（用户生成内容）工具化与平台化**：通过推出[#全新NIO Phone#](https://m.weibo.cn/detail/5138224303833764)，鼓励用户使用蔚来自己的产品进行内容创作。官方微博频繁[展示社区用户的摄影作品](https://m.weibo.cn/detail/5147676585757632)，并设立[“蔚来创意官”](https://m.weibo.cn/detail/5120844789711159)身份，为高质量UGC提供官方展示平台，激励用户持续产出优质内容。\n3. **数据共创内容**：将用户行为数据进行可视化包装，发布如[《ET5T十万台车主的用车报告》](https://m.weibo.cn/detail/5211225941085531)等内容，让每一位车主都能在宏观数据中找到自己的影子，产生强烈的参与感和共鸣。\n4. **关键人物深度绑定**：邀请各领域有影响力的用户，如财经作家[吴晓波](https://m.weibo.cn/detail/5185323938088507)（同时也是ET9车主），参与到工厂探访等品牌活动中，借助其专业性和影响力，从用户视角为品牌背书。"
+                },
+                {
+                    "传播策略标题": "能源体系护城河的持续性沟通",
+                    "传播策略概述": "蔚来深刻理解补能焦虑是电动车消费的核心痛点，因此将其“可充可换可升级”的能源服务体系作为核心战略资产进行持续、高频、里程碑式的传播。策略目的在于将换电便利性与品牌深度绑定，构建强大的差异化竞争壁垒，向市场传递“选择蔚来=选择无忧出行”的强心智。",
+                    "执行手法": "1. **里程碑事件化传播**：将换电站的建设数量进行节点化包装，如[#蔚来建成2600座换电站#](https://m.weibo.cn/detail/5094429681782836)、[#蔚来建成3000座换电站#](https://m.weibo.cn/detail/5118694306613829)等，通过数字里程碑不断刷新用户的感知，量化品牌的投入与实力。\n2. **战略目标具象化传播**：将宏大的战略（如打通高速网络）拆解为用户可感知的项目，如“7纵9横12大城市群”高速换电网络布局和极具标志性的[“高速换电千站计划”](https://m.weibo.cn/detail/5186840958339692)。通过倒计时、上线仪式直播等方式，让用户全程见证目标的达成，极大地提升了信任感。\n3. **极限场景化验证**：策划[“一路换电到珠峰”](https://m.weibo.cn/detail/5199905807404272)等极限场景穿越活动，将换电网络与G318川藏线等高难度、高象征意义的路线结合，直观证明蔚来补能体系的可靠性与广泛覆盖，有力地破除了极端环境下的里程焦虑。\n4. **开放合作生态展示**：主动公布与[长沙经开集团](https://m.weibo.cn/detail/5150697395062093)、[武汉首义科创投](https://m.weibo.cn/detail/5092678018531366)等地方国资或能源企业的战略合作，展示其能源网络的开放性和生态构建能力，提升了其作为基础设施服务商的行业地位和未来想象空间。"
+                },
+                {
+                    "传播策略标题": "生活方式跨界联名与圈层渗透",
+                    "传播策略概述": "蔚来精准地通过与不同领域头部品牌的跨界联名，打破汽车品牌的单一圈层，将品牌形象与多元化的高端生活方式进行强关联。此策略旨在拓展品牌外延，吸引不同兴趣圈层的潜在用户，将“车”从交通工具升维为实现高品质生活的“搭档”。",
+                    "执行手法": "1. **精准圈层绑定**：选择与品牌调性高度契合的伙伴。例如，与高端单板滑雪品牌[BURTON的合作](https://m.weibo.cn/detail/5112996005151369)，精准触达追求潮流、热爱极限运动的高净值人群，并将EC6车型与冬季冰雪生活方式深度捆绑。\n2. **场景化内容共创**：联名不只是Logo的简单叠加，而是深入场景的内容共创。在与BURTON的合作中，产出了大量在滑雪场实景拍摄的视频和图文，生动展示了EC6作为“滑雪好搭紫”在装载能力、舒适性等方面的优势，让产品卖点在真实场景中得以体现。\n3. **延展出行生态**：与智能短途出行品牌[LEMMO的合作](https://m.weibo.cn/detail/5179613262381755)，共同推出折叠电单车，推广“4+2”（汽车+自行车）的出行理念。这不仅丰富了蔚来的产品生态，更将其品牌理念从长途旅行延伸至都市内的灵活短驳，展现了对未来出行方式的全面思考。\n4. **数字化娱乐渗透**：将旗舰超跑[EP9植入知名赛车游戏《极品飞车》](https://m.weibo.cn/detail/5145253715903551)，让品牌核心的性能基因和赛道文化，通过虚拟世界触达更广泛的年轻用户和游戏爱好者，实现了低成本、高效率的品牌心智渗透。"
+                }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            if (typeof reportData === 'undefined') {
+                console.error("错误：未能找到 reportData 对象。");
+                alert("数据对象加载失败，请确保数据已正确粘贴。");
+                return;
+            }
+            
+            const data = reportData;
+            const imagePlaceholders = [
+                'https://wx1.sinaimg.cn/large/006erGLUgy1i4yannfi7kj32nd1rl7sw.jpg',
+                'https://wx1.sinaimg.cn/large/006erGLUgy1i55a0cbc6mj32nd1rl7nm.jpg'
+            ];
+
+            // --- Markdown 解析函数 ---
+            function parseMarkdown(text) {
+                if (!text) return '';
+                // The order is important: handle links first, then bold, then newlines.
+                return text
+                    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>') // Links
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+                    .replace(/\n/g, '<br>'); // Newlines
+            }
+
+            // --- 1. 填充整体分析 (竖向排列) ---
+            const analysisContainer = document.getElementById('analysis-container');
+            const overallAnalysis = data['一、整体分析'];
+            Object.keys(overallAnalysis).forEach(key => {
+                const card = document.createElement('div');
+                card.className = 'analysis-card';
+                card.innerHTML = `<h3>${key}</h3><p>${parseMarkdown(overallAnalysis[key])}</p>`;
+                analysisContainer.appendChild(card);
+            });
+            
+            // --- 2. 动态生成时间线和表格 ---
+            const timelineContainer = document.getElementById('timeline-container');
+            const tableBody = document.getElementById('table-body');
+            const timelineItems = data['二、传播事件时间表'];
+
+            timelineItems.forEach((item, index) => {
+                let linksHtml = '<ul>';
+                if (item['相关链接'] && Array.isArray(item['相关链接'])) {
+                     item['相关链接'].forEach(link => {
+                        linksHtml += `<li>${parseMarkdown(link)}</li>`;
+                    });
+                }
+                linksHtml += '</ul>';
+                
+                // Create Timeline Item
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">${item['时间区间']}</div>
+                    <div class="timeline-content">
+                        <img src="${imagePlaceholders[index % imagePlaceholders.length]}" alt="${item['主题']}" class="timeline-image">
+                        <h4>${item['主题']}</h4>
+                        <p>${parseMarkdown(item['描述'])}</p>
+                        <div class="timeline-links">${linksHtml}</div>
+                    </div>
+                `;
+                timelineContainer.appendChild(timelineItem);
+
+                // Create Table Row
+                const tableRow = document.createElement('tr');
+                tableRow.innerHTML = `
+                    <td>${item['主题']}</td>
+                    <td>${item['时间区间']}</td>
+                    <td>${parseMarkdown(item['描述'])}</td>
+                    <td>${linksHtml}</td>
+                `;
+                tableBody.appendChild(tableRow);
+            });
+
+            // --- 3. 动态生成策略亮点卡片 ---
+            const strategyContainer = document.getElementById('strategy-container');
+            const strategyItems = data['三、关键传播策略亮点'];
+            
+            strategyItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'strategy-card';
+
+                const executionHtml = item['执行手法'].split('\n').map(line => `<li>${parseMarkdown(line.replace(/^\d+\.\s*/, ''))}</li>`).join('');
+
+                card.innerHTML = `
+                    <h3>${item['传播策略标题']}</h3>
+                    <h5>策略概述</h5>
+                    <p>${parseMarkdown(item['传播策略概述'])}</p>
+                    <h5>执行手法</h5>
+                    <ul>${executionHtml}</ul>
+                `;
+                strategyContainer.appendChild(card);
+            });
+
+            // --- 交互逻辑 ---
+            // 视图切换
+            const toggleBtn = document.getElementById('toggle-view-btn');
+            const timelineView = document.getElementById('timeline-view');
+            const tableView = document.getElementById('table-view');
+            let isTimelineVisible = true;
+
+            toggleBtn.addEventListener('click', () => {
+                isTimelineVisible = !isTimelineVisible;
+                if (isTimelineVisible) {
+                    timelineView.style.display = 'block';
+                    tableView.style.display = 'none';
+                    toggleBtn.textContent = '切换为表格视图';
+                } else {
+                    timelineView.style.display = 'none';
+                    tableView.style.display = 'block';
+                    toggleBtn.textContent = '切换为时间轴视图';
+                }
+            });
+
+            // 时间轴鼠标滚轮横向滚动
+            const timelineWrapper = document.getElementById('timeline-view');
+            timelineWrapper.addEventListener('wheel', (event) => {
+                if (timelineWrapper.scrollWidth > timelineWrapper.clientWidth) {
+                    event.preventDefault();
+                    timelineWrapper.scrollLeft += event.deltaY;
+                }
+            });
+            
+            // --- 页脚年份 ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+        });
+    </script>
+</body>
+</html>
+
