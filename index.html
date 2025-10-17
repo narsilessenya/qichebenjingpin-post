@@ -314,10 +314,9 @@
     .brand-switcher {
       display: flex;
       gap: 10px;
-      margin-top: 0;
-      margin-bottom: 0;
+      margin-top: 20px;
+      margin-bottom: 20px;
       padding-top: 20px;
-      padding-bottom: 20px;
       border-top: 1px solid #E8F3FF;
       flex-wrap: wrap;
     }
@@ -364,6 +363,41 @@
       display: block;
     }
 
+    /* 平台内容容器 */
+    .platform-content {
+      display: none;
+    }
+
+    .platform-content.active {
+      display: block;
+    }
+
+    /* 第四部分平台内容样式 */
+    .platform-content[data-section="comparison"] .analysis-card {
+      transition: all 0.3s ease;
+    }
+
+    /* 第四部分 - 微博平台样式 */
+    .platform-content[data-section="comparison"][data-platform-content="weibo"] .analysis-card,
+    .platform-content[data-section="comparison"][data-platform-content="weibo"] .strategy-card {
+      background: #FFFCE8;
+      border-left-color: #ff9f1c;
+    }
+
+    /* 第四部分 - 小红书平台样式 */
+    .platform-content[data-section="comparison"][data-platform-content="xiaohongshu"] .analysis-card,
+    .platform-content[data-section="comparison"][data-platform-content="xiaohongshu"] .strategy-card {
+      background: #FFECE8;
+      border-left-color: #ee5a24;
+    }
+
+    /* 第四部分 - 抖音平台样式 */
+    .platform-content[data-section="comparison"][data-platform-content="douyin"] .analysis-card,
+    .platform-content[data-section="comparison"][data-platform-content="douyin"] .strategy-card {
+      background: #E8F3FF;
+      border-left-color: #3a7bd5;
+    }
+
     /* 分析卡片 */
     .analysis-card,
     .strategy-card {
@@ -394,19 +428,6 @@
     .strategy-card.platform-douyin {
       background: #E8F3FF;
       border-left-color: #3a7bd5;
-    }
-
-    /* 确保品牌内容卡片使用统一的背景色，不受平台切换影响（提高优先级） */
-    .brand-content .analysis-card,
-    .brand-content .strategy-card,
-    .brand-content .analysis-card.platform-weibo,
-    .brand-content .analysis-card.platform-xiaohongshu,
-    .brand-content .analysis-card.platform-douyin,
-    .brand-content .strategy-card.platform-weibo,
-    .brand-content .strategy-card.platform-xiaohongshu,
-    .brand-content .strategy-card.platform-douyin {
-      background: #F7FAFF !important;
-      border-left-color: #4080FF !important;
     }
 
     .analysis-card:last-child,
@@ -863,7 +884,7 @@
     }
 
     .platform.weibo::before {
-      background: linear-gradient(135deg, #ff9ff3, #f368e0);
+      background: linear-gradient(135deg, #ffd93d, #ff9f1c);
     }
 
     .platform.douyin::before {
@@ -949,7 +970,7 @@
     }
 
     .weibo .post-card::before {
-      background: #ff9ff3;
+      background: #ff9f1c;
     }
 
     .douyin .post-card::before {
@@ -1471,10 +1492,17 @@
     <section class="report-section" id="comparison-analysis">
       <div class="section-title-wrapper">
         <h2 class="report-section-title">四、对比分析与传播洞察</h2>
+        <div class="platform-switcher">
+          <div class="platform-switch-icon weibo-icon active" data-platform="weibo" data-section="comparison">微</div>
+          <div class="platform-switch-icon xiaohongshu-icon" data-platform="xiaohongshu" data-section="comparison">红</div>
+          <div class="platform-switch-icon douyin-icon" data-platform="douyin" data-section="comparison">抖</div>
+        </div>
       </div>
 
+      <!-- 平台内容容器 - 微博 -->
+      <div class="platform-content active" data-platform-content="weibo" data-section="comparison">
       <!-- 核心策略对比矩阵 -->
-      <div class="analysis-card" style="background: #F7FAFF; margin-bottom: 30px;">
+      <div class="analysis-card" style="margin-bottom: 30px;">
         <h3 style="color: #1D2129; margin-bottom: 20px;">核心策略对比矩阵</h3>
         <div style="overflow-x: auto;">
           <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
@@ -1679,7 +1707,7 @@
             系统化"性能文化"，占领"驾驶乐趣"心智
           </h4>
           <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-            <strong">当前局势</strong>
+            <strong>当前局势</strong>
             <p style="margin: 5px 0 0 0; line-height: 1.8; color: #6B7785;">小米通过"纽北"和"浙赛圈速"已初步树立性能标杆。小鹏也在通过"赛道嘉年华"争夺"驾驶"标签。</p>
           </div>
           <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
@@ -1726,6 +1754,29 @@
           </div>
         </div>
       </div>
+      </div>
+      <!-- 平台内容容器 - 微博 结束 -->
+
+      <!-- 平台内容容器 - 小红书 -->
+      <div class="platform-content" data-platform-content="xiaohongshu" data-section="comparison">
+        <div class="analysis-card" style="margin-top: 20px;">
+          <h3 style="color: #1D2129; margin-bottom: 20px;">小红书平台 - 对比分析与传播洞察</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            小红书平台的品牌对比分析内容占位，待数据接入后显示完整对比报告。
+          </p>
+        </div>
+      </div>
+
+      <!-- 平台内容容器 - 抖音 -->
+      <div class="platform-content" data-platform-content="douyin" data-section="comparison">
+        <div class="analysis-card" style="margin-top: 20px;">
+          <h3 style="color: #1D2129; margin-bottom: 20px;">抖音平台 - 对比分析与传播洞察</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            抖音平台的品牌对比分析内容占位，待数据接入后显示完整对比报告。
+          </p>
+        </div>
+      </div>
+
     </section>
   </div>
 
@@ -1733,14 +1784,14 @@
     <div class="timeline-container" id="timeline-container" style="display: none;">
       <h2 class="report-section-title" style="margin-bottom: 0; flex: 1;">五、三平台发帖时间轴</h2>
       <!-- <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">发帖时间轴</h3> -->
+        <!-- 品牌切换器 -->
       <div class="brand-switcher">
-        <button class="brand-switch-btn active" data-brand="xiaomi" data-section="analysis">本品（小米汽车）</button>
-        <button class="brand-switch-btn" data-brand="lixiang" data-section="analysis">理想汽车</button>
-        <button class="brand-switch-btn" data-brand="weilai" data-section="analysis">蔚来汽车</button>
-        <button class="brand-switch-btn" data-brand="xiaopeng" data-section="analysis">小鹏汽车</button>
+        <button class="brand-switch-btn active" data-brand="xiaomi" data-section="timeline">本品（小米汽车）</button>
+        <button class="brand-switch-btn" data-brand="lixiang" data-section="timeline">理想汽车</button>
+        <button class="brand-switch-btn" data-brand="weilai" data-section="timeline">蔚来汽车</button>
+        <button class="brand-switch-btn" data-brand="xiaopeng" data-section="timeline">小鹏汽车</button>
       </div>
 
- 
 
     <!-- 筛选卡片 -->
     <div class="filter-card">
@@ -1750,7 +1801,6 @@
       </div>
 
       <div class="filter-card-content" id="filter-card-content">
-       
         <div class="filter-section">
           <div class="filter-label">按平台筛选</div>
           <div class="filter-options">
@@ -2143,17 +2193,18 @@
       </div>
     </div>
 
-         <!-- 月份快捷导航 -->
-         <div class="month-navigation" id="month-navigation"></div>
+    
+      <!-- 月份快捷导航 -->
+      <div class="month-navigation" id="month-navigation"></div>
 
-         <!-- 可滚动的时间轴 -->
-         <div class="timeline-scroll-wrapper" id="timeline-scroll-wrapper">
-           <div class="timeline-content">
-             <div class="timeline"></div>
-             <div class="timeline-dates" id="timeline-dates"></div>
-           </div>
-         </div>
-       </div>
+      <!-- 可滚动的时间轴 -->
+      <div class="timeline-scroll-wrapper" id="timeline-scroll-wrapper">
+        <div class="timeline-content">
+          <div class="timeline"></div>
+          <div class="timeline-dates" id="timeline-dates"></div>
+        </div>
+      </div>
+    </div>
 
 
 
@@ -22764,12 +22815,26 @@
             }
           });
           
-          // 同时渲染三个部分的内容
+          // 同时渲染所有部分的内容
           renderAnalysis(platform);
           renderStrategy(platform);
           renderTimeline(platform);
+          renderComparison(platform);  // 添加第四部分的渲染
           currentPlatform = platform;
         });
+      });
+    }
+
+    // 渲染第四部分（对比分析与传播洞察）的平台内容
+    function renderComparison(platform) {
+      // 更新所有对比分析部分的平台内容显示
+      const allComparisonContents = document.querySelectorAll('.platform-content[data-section="comparison"]');
+      allComparisonContents.forEach(content => {
+        if (content.getAttribute('data-platform-content') === platform) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
       });
     }
 
@@ -23279,7 +23344,7 @@
         btn.addEventListener('click', function() {
           const brand = this.getAttribute('data-brand');
           
-          // 更新所有章节的品牌按钮状态（联动）
+          // 更新所有章节的按钮状态（关联切换）
           const allBrandBtns = document.querySelectorAll('.brand-switch-btn');
           allBrandBtns.forEach(b => {
             if (b.getAttribute('data-brand') === brand) {
@@ -23289,7 +23354,7 @@
             }
           });
           
-          // 更新所有章节的品牌内容显示（联动）
+          // 更新所有章节的内容显示（关联切换）
           const allBrandContents = document.querySelectorAll('.brand-content');
           allBrandContents.forEach(content => {
             if (content.getAttribute('data-brand-content') === brand) {
