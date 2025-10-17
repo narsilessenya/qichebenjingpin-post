@@ -262,7 +262,7 @@
       gap: 15px;
       border-bottom: 2px solid #E8F3FF;
       padding-bottom: 15px;
-      margin-bottom: 25px;
+      margin-bottom: 0;
     }
 
     .section-title-wrapper .report-section-title {
@@ -310,6 +310,60 @@
       background: linear-gradient(135deg, #00d2ff, #3a7bd5);
     }
 
+    /* 品牌切换器 */
+    .brand-switcher {
+      display: flex;
+      gap: 10px;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top: 1px solid #E8F3FF;
+      flex-wrap: wrap;
+    }
+
+    .brand-switch-btn {
+      padding: 8px 20px;
+      border: 2px solid #E5E7EB;
+      border-radius: 20px;
+      background: white;
+      color: #6B7785;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+      white-space: nowrap;
+    }
+
+    .brand-switch-btn:hover {
+      border-color: #4080FF;
+      color: #4080FF;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(64, 128, 255, 0.2);
+    }
+
+    .brand-switch-btn.active {
+      background: linear-gradient(135deg, #4080FF, #165DFF);
+      color: white;
+      border-color: #165DFF;
+      font-weight: 600;
+    }
+
+    .brand-switch-btn.active:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(64, 128, 255, 0.3);
+    }
+
+    /* 品牌内容容器 */
+    .brand-content {
+      display: none;
+    }
+
+    .brand-content.active {
+      display: block;
+    }
+
     /* 分析卡片 */
     .analysis-card,
     .strategy-card {
@@ -340,6 +394,19 @@
     .strategy-card.platform-douyin {
       background: #E8F3FF;
       border-left-color: #3a7bd5;
+    }
+
+    /* 确保品牌内容卡片使用统一的背景色，不受平台切换影响（提高优先级） */
+    .brand-content .analysis-card,
+    .brand-content .strategy-card,
+    .brand-content .analysis-card.platform-weibo,
+    .brand-content .analysis-card.platform-xiaohongshu,
+    .brand-content .analysis-card.platform-douyin,
+    .brand-content .strategy-card.platform-weibo,
+    .brand-content .strategy-card.platform-xiaohongshu,
+    .brand-content .strategy-card.platform-douyin {
+      background: #F7FAFF !important;
+      border-left-color: #4080FF !important;
     }
 
     .analysis-card:last-child,
@@ -1031,11 +1098,173 @@
         flex-direction: column;
         gap: 15px;
       }
+
+      .section-nav {
+        display: none;
+      }
+    }
+
+    /* 右侧章节导航 */
+    .section-nav {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 20px 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      max-width: 200px;
+      transition: all 0.3s ease;
+    }
+
+    .section-nav-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #4E5969;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #E8F3FF;
+      text-align: center;
+    }
+
+    .section-nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .section-nav-item {
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .section-nav-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-nav-link {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #6B7785;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-nav-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: #4080FF;
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .section-nav-link:hover {
+      background: #F7FAFF;
+      color: #165DFF;
+      transform: translateX(-3px);
+    }
+
+    .section-nav-link:hover::before {
+      transform: scaleY(1);
+    }
+
+    .section-nav-link.active {
+      background: linear-gradient(135deg, #E8F3FF, #F7FAFF);
+      color: #165DFF;
+      font-weight: 600;
+    }
+
+    .section-nav-link.active::before {
+      transform: scaleY(1);
+    }
+
+    .section-nav-number {
+      display: inline-block;
+      min-width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      background: #E5E7EB;
+      color: #6B7785;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .section-nav-link:hover .section-nav-number,
+    .section-nav-link.active .section-nav-number {
+      background: #4080FF;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .section-nav-text {
+      flex: 1;
+      line-height: 1.4;
+    }
+
+    /* 隐藏导航在小屏幕上 */
+    @media (max-width: 1400px) {
+      .section-nav {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
+  <!-- 右侧章节导航 -->
+  <nav class="section-nav" id="sectionNav">
+    <div class="section-nav-title">章节导航</div>
+    <ul class="section-nav-list">
+      <li class="section-nav-item">
+        <a href="#overall-analysis" class="section-nav-link" data-section="overall-analysis">
+          <span class="section-nav-number">1</span>
+          <span class="section-nav-text">整体分析</span>
+        </a>
+      </li>
+      <li class="section-nav-item">
+        <a href="#strategy-highlights" class="section-nav-link" data-section="strategy-highlights">
+          <span class="section-nav-number">2</span>
+          <span class="section-nav-text">传播策略亮点</span>
+        </a>
+      </li>
+      <li class="section-nav-item">
+        <a href="#event-timeline-section" class="section-nav-link" data-section="event-timeline-section">
+          <span class="section-nav-number">3</span>
+          <span class="section-nav-text">事件时间表</span>
+        </a>
+      </li>
+      <li class="section-nav-item">
+        <a href="#comparison-analysis" class="section-nav-link" data-section="comparison-analysis">
+          <span class="section-nav-number">4</span>
+          <span class="section-nav-text">对比分析洞察</span>
+        </a>
+      </li>
+      <li class="section-nav-item">
+        <a href="#timeline-container" class="section-nav-link" data-section="timeline-container">
+          <span class="section-nav-number">5</span>
+          <span class="section-nav-text">发帖时间轴</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
   <div class="container">
     <div class="header">
       <h1>传播链路分析</h1>
@@ -1052,7 +1281,49 @@
           <div class="platform-switch-icon douyin-icon" data-platform="douyin" data-section="analysis">抖</div>
         </div>
       </div>
-      <div id="analysis-container"></div>
+      
+      <!-- 品牌切换器 -->
+      <div class="brand-switcher">
+        <button class="brand-switch-btn active" data-brand="xiaomi" data-section="analysis">本品（小米汽车）</button>
+        <button class="brand-switch-btn" data-brand="lixiang" data-section="analysis">理想汽车</button>
+        <button class="brand-switch-btn" data-brand="weilai" data-section="analysis">蔚来汽车</button>
+        <button class="brand-switch-btn" data-brand="xiaopeng" data-section="analysis">小鹏汽车</button>
+      </div>
+
+      <!-- 小米品牌内容 -->
+      <div class="brand-content active" data-brand-content="xiaomi" data-section="analysis">
+        <div id="analysis-container"></div>
+      </div>
+
+      <!-- 理想品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="lixiang" data-section="analysis">
+        <div class="analysis-card">
+          <h3>理想汽车 - 整体分析</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            理想汽车社媒数据分析内容占位，待数据接入后显示完整分析报告。
+          </p>
+        </div>
+      </div>
+
+      <!-- 蔚来品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="weilai" data-section="analysis">
+        <div class="analysis-card">
+          <h3>蔚来汽车 - 整体分析</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            蔚来汽车社媒数据分析内容占位，待数据接入后显示完整分析报告。
+          </p>
+        </div>
+      </div>
+
+      <!-- 小鹏品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="xiaopeng" data-section="analysis">
+        <div class="analysis-card">
+          <h3>小鹏汽车 - 整体分析</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            小鹏汽车社媒数据分析内容占位，待数据接入后显示完整分析报告。
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- 关键传播策略亮点 -->
@@ -1065,7 +1336,49 @@
           <div class="platform-switch-icon douyin-icon" data-platform="douyin" data-section="strategy">抖</div>
         </div>
       </div>
-      <div id="strategy-container"></div>
+
+      <!-- 品牌切换器 -->
+      <div class="brand-switcher">
+        <button class="brand-switch-btn active" data-brand="xiaomi" data-section="strategy">本品（小米汽车）</button>
+        <button class="brand-switch-btn" data-brand="lixiang" data-section="strategy">理想汽车</button>
+        <button class="brand-switch-btn" data-brand="weilai" data-section="strategy">蔚来汽车</button>
+        <button class="brand-switch-btn" data-brand="xiaopeng" data-section="strategy">小鹏汽车</button>
+      </div>
+
+      <!-- 小米品牌内容 -->
+      <div class="brand-content active" data-brand-content="xiaomi" data-section="strategy">
+        <div id="strategy-container"></div>
+      </div>
+
+      <!-- 理想品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="lixiang" data-section="strategy">
+        <div class="strategy-card">
+          <h3>理想汽车 - 关键传播策略亮点</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            理想汽车传播策略分析内容占位，待数据接入后显示完整策略报告。
+          </p>
+        </div>
+      </div>
+
+      <!-- 蔚来品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="weilai" data-section="strategy">
+        <div class="strategy-card">
+          <h3>蔚来汽车 - 关键传播策略亮点</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            蔚来汽车传播策略分析内容占位，待数据接入后显示完整策略报告。
+          </p>
+        </div>
+      </div>
+
+      <!-- 小鹏品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="xiaopeng" data-section="strategy">
+        <div class="strategy-card">
+          <h3>小鹏汽车 - 关键传播策略亮点</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            小鹏汽车传播策略分析内容占位，待数据接入后显示完整策略报告。
+          </p>
+        </div>
+      </div>
     </section>
   </div>
 
@@ -1086,22 +1399,63 @@
         </div>
       </div>
 
-      <div class="event-timeline-wrapper" id="event-timeline-view">
-        <div class="event-timeline" id="event-timeline-container"></div>
+      <!-- 品牌切换器 -->
+      <div class="brand-switcher">
+        <button class="brand-switch-btn active" data-brand="xiaomi" data-section="timeline">本品（小米汽车）</button>
+        <button class="brand-switch-btn" data-brand="lixiang" data-section="timeline">理想汽车</button>
+        <button class="brand-switch-btn" data-brand="weilai" data-section="timeline">蔚来汽车</button>
+        <button class="brand-switch-btn" data-brand="xiaopeng" data-section="timeline">小鹏汽车</button>
       </div>
 
-      <div class="table-view" id="event-table-view">
-        <table class="report-table">
-          <thead>
-            <tr>
-              <th style="width: 20%;">主题</th>
-              <th style="width: 15%;">时间区间</th>
-              <th style="width: 45%;">描述</th>
-              <th style="width: 20%;">相关链接</th>
-            </tr>
-          </thead>
-          <tbody id="event-table-body"></tbody>
-        </table>
+      <!-- 小米品牌内容 -->
+      <div class="brand-content active" data-brand-content="xiaomi" data-section="timeline">
+        <div class="event-timeline-wrapper" id="event-timeline-view">
+          <div class="event-timeline" id="event-timeline-container"></div>
+        </div>
+
+        <div class="table-view" id="event-table-view">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">主题</th>
+                <th style="width: 15%;">时间区间</th>
+                <th style="width: 45%;">描述</th>
+                <th style="width: 20%;">相关链接</th>
+              </tr>
+            </thead>
+            <tbody id="event-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 理想品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="lixiang" data-section="timeline">
+        <div class="analysis-card" style="margin-top: 20px;">
+          <h3>理想汽车 - 传播事件时间表</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            理想汽车传播事件时间表内容占位，待数据接入后显示完整时间轴。
+          </p>
+        </div>
+      </div>
+
+      <!-- 蔚来品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="weilai" data-section="timeline">
+        <div class="analysis-card" style="margin-top: 20px;">
+          <h3>蔚来汽车 - 传播事件时间表</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            蔚来汽车传播事件时间表内容占位，待数据接入后显示完整时间轴。
+          </p>
+        </div>
+      </div>
+
+      <!-- 小鹏品牌内容（占位符） -->
+      <div class="brand-content" data-brand-content="xiaopeng" data-section="timeline">
+        <div class="analysis-card" style="margin-top: 20px;">
+          <h3>小鹏汽车 - 传播事件时间表</h3>
+          <p style="line-height: 1.8; color: #6B7785; margin-top: 10px;">
+            小鹏汽车传播事件时间表内容占位，待数据接入后显示完整时间轴。
+          </p>
+        </div>
       </div>
     </section>
 
@@ -1111,22 +1465,282 @@
     </div>
   
   </div>
+
+  <!-- 对比分析与传播洞察 -->
   <div class="container">
-    <div class="timeline-container" id="timeline-container" style="display: none;">
-      <h2 class="report-section-title" style="margin-bottom: 0; flex: 1;">四、三平台发帖时间轴</h2>
-      <!-- <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">发帖时间轴</h3> -->
+    <section class="report-section" id="comparison-analysis">
+      <div class="section-title-wrapper">
+        <h2 class="report-section-title">四、对比分析与传播洞察</h2>
+      </div>
 
-      <!-- 月份快捷导航 -->
-      <div class="month-navigation" id="month-navigation"></div>
-
-      <!-- 可滚动的时间轴 -->
-      <div class="timeline-scroll-wrapper" id="timeline-scroll-wrapper">
-        <div class="timeline-content">
-          <div class="timeline"></div>
-          <div class="timeline-dates" id="timeline-dates"></div>
+      <!-- 核心策略对比矩阵 -->
+      <div class="analysis-card" style="background: #F7FAFF; margin-bottom: 30px;">
+        <h3 style="color: #1D2129; margin-bottom: 20px;">核心策略对比矩阵</h3>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
+            <thead>
+              <tr style="background: linear-gradient(135deg, #4080FF, #165DFF); color: white;">
+                <th style="padding: 15px; text-align: left; font-weight: 600;">维度</th>
+                <th style="padding: 15px; text-align: left; font-weight: 600;">本品（小米汽车）</th>
+                <th style="padding: 15px; text-align: left; font-weight: 600;">理想汽车</th>
+                <th style="padding: 15px; text-align: left; font-weight: 600;">蔚来汽车</th>
+                <th style="padding: 15px; text-align: left; font-weight: 600;">小鹏汽车</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: white;">
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB; font-weight: 600; color: #4E5969;">核心定位</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">人车家全生态</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">创造移动的家</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">用户企业与服务豪华</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">科技定义新豪华</td>
+              </tr>
+              <tr style="background: #F9FAFB;">
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB; font-weight: 600; color: #4E5969;">目标人群</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">科技爱好者、米粉、追求体验的年轻及家庭用户</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">高知、高收入家庭用户（尤其多孩家庭）</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">追求高品质生活、认同社群价值的城市精英</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">追求新潮、热爱科技的都市年轻群体</td>
+              </tr>
+              <tr style="background: white;">
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB; font-weight: 600; color: #4E5969;">豪华叙事</td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">
+                  <strong>性能与生态的豪华</strong><br>
+                  通过赛道纪录、硬核技术IP（如超级电机）和"人车家"的无缝生态体验构建
+                </td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">
+                  <strong>家庭与数据的豪华</strong><br>
+                  通过对家庭无微不至的关怀、"周销量"彰显的市场地位和CEO的行业洞察构建
+                </td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">
+                  <strong>服务与社群的豪华</strong><br>
+                  通过换电网络（服务壁垒）、NIO Day（社群归属）和高端生活方式联名（圈层认同）构建
+                </td>
+                <td style="padding: 15px; border-bottom: 1px solid #E5E7EB;">
+                  <strong>时尚与AI的豪华</strong><br>
+                  通过明星矩阵（时尚标签）、国际化形象（慕尼黑车展）和AI智能驾驶的"先人一步"体验构建
+                </td>
+              </tr>
+              <tr style="background: #F9FAFB;">
+                <td style="padding: 15px; font-weight: 600; color: #4E5969;">核心传播杠杆</td>
+                <td style="padding: 15px;">
+                  1. 超级IP (雷军+技术IP)<br>
+                  2. 场景营销 (科技露营季)<br>
+                  3. 用户共创 (车主故事)<br>
+                  4. 性能背书 (纽北圈速)
+                </td>
+                <td style="padding: 15px;">
+                  1. 超级IP (李想+AI Talk)<br>
+                  2. 数据背书 (周销量战报)<br>
+                  3. 场景营销 (理想旅行家)<br>
+                  4. 顶流破圈 (易烊千玺)
+                </td>
+                <td style="padding: 15px;">
+                  1. 服务壁垒 (换电网络)<br>
+                  2. 社群运营 (NIO Day)<br>
+                  3. 技术情感化 (天行底盘)<br>
+                  4. 高端跨界 (BURTON滑雪)
+                </td>
+                <td style="padding: 15px;">
+                  1. 明星矩阵 (王子文等)<br>
+                  2. 国际占位 (慕尼黑车展)<br>
+                  3. 技术具象化 (AI底盘)<br>
+                  4. 社群文化 (赛道嘉年华)
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
+
+      <!-- 关键洞察 -->
+      <div style="margin-bottom: 30px;">
+        <h3 style="color: #1D2129; margin-bottom: 20px; font-size: 1.3rem;">关键洞察与策略建议</h3>
+
+        <!-- 洞察1 -->
+        <div class="strategy-card" style="margin-bottom: 20px;">
+          <h4 style="color: #165DFF; margin: 0 0 15px 0; font-size: 1.1rem;">
+            <span style="background: #E8F3FF; padding: 3px 10px; border-radius: 5px; margin-right: 8px;">洞察 1</span>
+            "超级CEO" IP是核心杠杆，但打法趋同
+          </h4>
+          <p style="line-height: 1.8; color: #4E5969; margin-bottom: 15px;">
+            小米的雷军和理想的李想均被成功塑造成"超级产品经理"和品牌灵魂人物。这种高度人格化的策略在建立品牌信任和传递产品哲学方面效率极高。蔚来（李斌）和小鹏（何小鹏）同样在运用CEO影响力，但依赖度相对较低。
+          </p>
+          <h5 style="color: #4E5969; margin: 15px 0 10px 0; font-weight: 600;">战略建议</h5>
+          <ul style="padding-left: 20px; margin: 10px 0;">
+            <li style="margin-bottom: 10px; line-height: 1.8;">
+              <strong style="color: #165DFF;">强化IP矩阵：</strong>继续最大化雷军的个人IP优势。同时，应效仿小米报告中"李肖爽探访定制中心"的做法，系统性地将更多高管（如技术、设计负责人）推向台前，打造"高管专家团"IP矩阵，分担单一IP的风险，并使品牌形象更多元、更专业。
+            </li>
+            <li style="margin-bottom: 10px; line-height: 1.8;">
+              <strong style="color: #165DFF;">区隔IP调性：</strong>李想的IP形象偏向"行业洞察者"和"家庭守护者"。雷军的IP应更聚焦于"科技信仰者"和"生态构建者"，强化小米在硬核技术和万物互联上的绝对权威，形成差异化。
+            </li>
+          </ul>
+        </div>
+
+        <!-- 洞察2 -->
+        <div class="strategy-card" style="margin-bottom: 20px;">
+          <h4 style="color: #165DFF; margin: 0 0 15px 0; font-size: 1.1rem;">
+            <span style="background: #E8F3FF; padding: 3px 10px; border-radius: 5px; margin-right: 8px;">洞察 2</span>
+            豪华感已被重新定义，赛道高度分化
+          </h4>
+          <p style="line-height: 1.8; color: #4E5969; margin-bottom: 15px;">
+            竞品均未采用传统豪华（用料、历史）的叙事，而是成功开辟了新赛道：<br>
+            <strong>蔚来</strong> = 服务豪华（换电的尊贵感）<br>
+            <strong>理想</strong> = 家庭豪华（对家人的关怀备至）<br>
+            <strong>小鹏</strong> = 时尚豪华（明星同款的潮流感）
+          </p>
+          <h5 style="color: #4E5969; margin: 15px 0 10px 0; font-weight: 600;">战略建议</h5>
+          <ul style="padding-left: 20px; margin: 10px 0;">
+            <li style="margin-bottom: 10px; line-height: 1.8;">
+              <strong style="color: #165DFF;">锚定"生态豪华"：</strong>小米的独特优势在于"人车家全生态"。这是理想、蔚来、小鹏均无法短期复制的护城河。传播策略必须将"生态豪华"作为核心锚点。
+            </li>
+            <li style="margin-bottom: 10px; line-height: 1.8;">
+              <strong style="color: #165DFF;">具象化"生态豪华"：</strong>必须超越"手车互联"等功能点，将其包装为一种"先人一步"的豪华体验。例如，通过场景化视频展示"下班途中，车机已唤醒家中空调和电饭煲；到地库时，手机自动接力导航至电梯口"的无缝体验。<strong>卖点不是功能，而是这种"万物随心"的掌控感。</strong>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 洞察3 -->
+        <div class="strategy-card" style="margin-bottom: 20px;">
+          <h4 style="color: #165DFF; margin: 0 0 15px 0; font-size: 1.1rem;">
+            <span style="background: #E8F3FF; padding: 3px 10px; border-radius: 5px; margin-right: 8px;">洞察 3</span>
+            社群运营已从"用户关怀"走向"身份认同"
+          </h4>
+          <p style="line-height: 1.8; color: #4E5969; margin-bottom: 15px;">
+            所有品牌都在做用户故事，但蔚来通过NIO Day和高端跨界（滑雪、马术）塑造了"精英圈层"的身份认同；理想通过"理想旅行家"塑造了"幸福家庭"的身份认同；小鹏通过"赛道嘉年华"和"潮改"塑造了"潮流玩家"的身份认同。
+          </p>
+          <h5 style="color: #4E5969; margin: 15px 0 10px 0; font-weight: 600;">战略建议</h5>
+          <ul style="padding-left: 20px; margin: 10px 0;">
+            <li style="margin-bottom: 10px; line-height: 1.8;">
+              <strong style="color: #165DFF;">升维社群价值：</strong>小米的"车主故事"和"车友会活动"是很好的基础。下一步应从"展示用户"升级为"赋能用户"。
+            </li>
+            <li style="margin-bottom: 10px; line-height: 1.8;">
+              <strong style="color: #165DFF;">打造"科技共创者"身份：</strong>利用小米强大的"米粉"文化，将"Ultra Club"等社群打造成"小米汽车共创委员会"。公开邀请核心用户参与下一代OTA功能评审、新品内测，甚至参与线下技术沙龙。<strong>让用户身份从"消费者"转变为"品牌共建者"</strong>，这是小米基因中最强的荣耀感来源。
+            </li>
+          </ul>
+        </div>
+
+        <!-- 洞察4 -->
+        <div class="strategy-card" style="margin-bottom: 20px;">
+          <h4 style="color: #165DFF; margin: 0 0 15px 0; font-size: 1.1rem;">
+            <span style="background: #E8F3FF; padding: 3px 10px; border-radius: 5px; margin-right: 8px;">洞察 4</span>
+            竞争对手正积极"破圈"以弥补短板
+          </h4>
+          <p style="line-height: 1.8; color: #4E5969; margin-bottom: 15px;">
+            竞品都在试图突破自己的单一画像：理想（家庭）签约易烊千玺，注入"年轻、时尚、高端"元素；小鹏（年轻）高调参加慕尼黑车展，强化"国际、高端"形象；蔚来（高端）通过"全程换电到珠峰"等活动，展示"硬核、可靠"的一面。
+          </p>
+          <h5 style="color: #4E5969; margin: 15px 0 10px 0; font-weight: 600;">战略建议</h5>
+          <ul style="padding-left: 20px; margin: 10px 0;">
+            <li style="margin-bottom: 10px; line-height: 1.8;">
+              <strong style="color: #165DFF;">平衡"科技"与"格调"：</strong>小米的"科技"和"性能"标签已深入人心。为防止品牌形象过于"直男"或"发烧友"，应增加"人文"和"艺术"层面的传播。
+            </li>
+            <li style="margin-bottom: 10px; line-height: 1.8;">
+              <strong style="color: #165DFF;">开展"科技美学"跨界：</strong>可效仿蔚来，但方向不同。蔚来是"生活方式美学"，小米可以是"数字艺术美学"。例如，与新媒体艺术家合作为"天际屏"打造专属数字艺术主题；赞助数字艺术展；或与高端建筑设计事务所联名，探讨"移动空间与居住空间"的设计哲学。
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 三大品牌机会点 -->
+      <div style="margin-bottom: 0;">
+        <h3 style="color: #1D2129; margin-bottom: 20px; font-size: 1.3rem;">本品机会点</h3>
+
+        <!-- 机会点1 -->
+        <div class="analysis-card" style="margin-bottom: 20px;">
+          <h4 style="color: #1D2129; margin: 0 0 15px 0; font-size: 1.1rem;">
+            <span style="background: white; padding: 3px 10px; border-radius: 5px; margin-right: 8px; ">机会点 1</span>
+            从"单品智能"到"全景智能"的降维打击
+          </h4>
+          <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <strong style="color: #4E5969;">当前局势</strong>
+            <p style="margin: 5px 0 0 0; line-height: 1.8; color: #6B7785;">所有竞品都在谈"智能座舱"和"智能驾驶"，但这仍局限于"车"本身。</p>
+          </div>
+          <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <strong>战略机会</strong>
+            <p style="margin: 5px 0 0 0; line-height: 1.8; color: #6B7785;">小米是唯一能真正实现"人、车、家"三端数据和体验闭环的玩家。应立刻将传播重点从"车机功能"转向"全景智能生活"。</p>
+          </div>
+          <div style="background: white; padding: 15px; border-radius: 8px;">
+            <strong>行动方案</strong>
+            <ul style="padding-left: 20px; margin: 10px 0 0 0;">
+              <li style="margin-bottom: 10px; line-height: 1.8;">
+                <strong>打造"杀手级场景"：</strong>策划一系列病毒式传播视频，主题为"小米车主的一天"。具象化展示"生态豪华"带来的便利：如上车时，手表（小米Watch）的心率数据同步到座舱，系统自动调节舒缓音乐和空调；下车时，车机上的导航任务无缝流转到手机（小米Phone）；回家后，电视（小米TV）弹出提示"您的YU7已在家中车位完成充电"。
+              </li>
+              <li style="line-height: 1.8;">
+                <strong>强化"超级小爱"：</strong>将"小爱同学"打造成贯穿三端的"唯一智能管家"，强化其作为全生态中枢的认知。
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 机会点2 -->
+        <div class="analysis-card" style="margin-bottom: 20px;">
+          <h4 style="color: #1D2129; margin: 0 0 15px 0; font-size: 1.1rem;">
+            <span style="background: white; padding: 3px 10px; border-radius: 5px; margin-right: 8px; color: #165DFF;">机会点 2</span>
+            系统化"性能文化"，占领"驾驶乐趣"心智
+          </h4>
+          <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <strong">当前局势</strong>
+            <p style="margin: 5px 0 0 0; line-height: 1.8; color: #6B7785;">小米通过"纽北"和"浙赛圈速"已初步树立性能标杆。小鹏也在通过"赛道嘉年华"争夺"驾驶"标签。</p>
+          </div>
+          <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <strong>战略机会</strong>
+            <p style="margin: 5px 0 0 0; line-height: 1.8; color: #6B7785;">理想主打"家庭舒适"，蔚来主打"服务尊贵"，在"大众化的高性能驾驶乐趣"上，市场尚有空白。</p>
+          </div>
+          <div style="background: white; padding: 15px; border-radius: 8px;">
+            <strong>行动方案</strong>
+            <ul style="padding-left: 20px; margin: 10px 0 0 0;">
+              <li style="margin-bottom: 10px; line-height: 1.8;">
+                <strong>IP化"小米精英驾驶"：</strong>将此活动从少数人的体验升级为大众可感知的品牌IP。可设立线上驾驶学院，分享专业驾驶技巧；并在线下打造多层级的"小米赛道日"（区分体验级、进阶级、大师级），让普通用户也能安全体验驾驶乐趣。
+              </li>
+              <li style="line-height: 1.8;">
+                <strong>绑定"专业赛事"：</strong>深度参与CEC等专业赛事，不仅是作为"安全车"，更应组织自己的厂队或用户车队参赛，将"赛道基因"持续固化为品牌资产，与竞品的"舒适"和"时尚"形成鲜明对比。
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 机会点3 -->
+        <div class="analysis-card" style=" margin-bottom: 0;">
+          <h4 style="color: #1D2129; margin: 0 0 15px 0; font-size: 1.1rem;">
+            <span style="background: white; padding: 3px 10px; border-radius: 5px; margin-right: 8px; ">机会点 3</span>
+            将"透明沟通"升级为"开放式共创"
+          </h4>
+          <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <strong style="color: #4E5969;">当前局势</strong>
+            <p style="margin: 5px 0 0 0; line-height: 1.8; color: #6B7785;">小米的"答网友问"栏目在建立透明、亲民形象方面非常成功，有效管理了用户预期。</p>
+          </div>
+          <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <strong>战略机会</strong>
+            <p style="margin: 5px 0 0 0; line-height: 1.8; color: #6B7785;">将这种"被动回答"的透明，升级为"主动邀请"的开放，彻底释放"米粉"的共创热情。</p>
+          </div>
+          <div style="background: white; padding: 15px; border-radius: 8px;">
+            <strong>行动方案</strong>
+            <ul style="padding-left: 20px; margin: 10px 0 0 0;">
+              <li style="margin-bottom: 10px; line-height: 1.8;">
+                <strong>发起"OTA共创计划"：</strong>定期在微博、小米社区发起投票，让用户决定下一次OTA最应实现的三大功能。
+              </li>
+              <li style="line-height: 1.8;">
+                <strong>建立"用户创意工坊"：</strong>鼓励用户围绕小米汽车开发"新玩法"（如利用外放电、大空间、智能屏），并设立专项基金和流量扶持优秀创意。<strong>将"小米的广告都是车主拍的"这一热梗，系统化、规模化地打造为小米独有的品牌护城河。</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="container">
+    <div class="timeline-container" id="timeline-container" style="display: none;">
+      <h2 class="report-section-title" style="margin-bottom: 0; flex: 1;">五、三平台发帖时间轴</h2>
+      <!-- <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">发帖时间轴</h3> -->
+      <div class="brand-switcher">
+        <button class="brand-switch-btn active" data-brand="xiaomi" data-section="analysis">本品（小米汽车）</button>
+        <button class="brand-switch-btn" data-brand="lixiang" data-section="analysis">理想汽车</button>
+        <button class="brand-switch-btn" data-brand="weilai" data-section="analysis">蔚来汽车</button>
+        <button class="brand-switch-btn" data-brand="xiaopeng" data-section="analysis">小鹏汽车</button>
+      </div>
+
+ 
 
     <!-- 筛选卡片 -->
     <div class="filter-card">
@@ -1136,6 +1750,7 @@
       </div>
 
       <div class="filter-card-content" id="filter-card-content">
+       
         <div class="filter-section">
           <div class="filter-label">按平台筛选</div>
           <div class="filter-options">
@@ -1527,6 +2142,18 @@
         </div>
       </div>
     </div>
+
+         <!-- 月份快捷导航 -->
+         <div class="month-navigation" id="month-navigation"></div>
+
+         <!-- 可滚动的时间轴 -->
+         <div class="timeline-scroll-wrapper" id="timeline-scroll-wrapper">
+           <div class="timeline-content">
+             <div class="timeline"></div>
+             <div class="timeline-dates" id="timeline-dates"></div>
+           </div>
+         </div>
+       </div>
 
 
 
@@ -22546,7 +23173,137 @@
       initializeReportContent();
       // 初始化数据可视化
       setTimeout(initializeData, 500);
+      // 初始化章节导航
+      initializeSectionNav();
+      // 初始化品牌切换器
+      initializeBrandSwitcher();
     });
+
+    // ==================== 章节导航功能 ====================
+    
+    function initializeSectionNav() {
+      const sectionLinks = document.querySelectorAll('.section-nav-link');
+      const sections = document.querySelectorAll('section[id], div[id="timeline-container"]');
+      
+      // 点击导航链接平滑滚动
+      sectionLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('data-section');
+          const targetSection = document.getElementById(targetId);
+          
+          if (targetSection) {
+            const headerOffset = 20; // 顶部偏移量
+            const elementPosition = targetSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+
+            // 更新活动状态
+            updateActiveNavLink(targetId);
+          }
+        });
+      });
+
+      // 监听滚动事件，更新当前活动章节
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateActiveSection();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // 初始化时检查当前位置
+      updateActiveSection();
+    }
+
+    function updateActiveSection() {
+      const sections = [
+        { id: 'overall-analysis', element: document.getElementById('overall-analysis') },
+        { id: 'strategy-highlights', element: document.getElementById('strategy-highlights') },
+        { id: 'event-timeline-section', element: document.getElementById('event-timeline-section') },
+        { id: 'comparison-analysis', element: document.getElementById('comparison-analysis') },
+        { id: 'timeline-container', element: document.getElementById('timeline-container') }
+      ];
+
+      const scrollPosition = window.pageYOffset + 100; // 增加偏移量
+
+      let currentSectionId = null;
+
+      // 从上到下检查哪个章节在视口中
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.element) {
+          const sectionTop = section.element.offsetTop;
+          if (scrollPosition >= sectionTop) {
+            currentSectionId = section.id;
+            break;
+          }
+        }
+      }
+
+      // 如果找到了当前章节，更新导航状态
+      if (currentSectionId) {
+        updateActiveNavLink(currentSectionId);
+      }
+    }
+
+    function updateActiveNavLink(sectionId) {
+      const sectionLinks = document.querySelectorAll('.section-nav-link');
+      
+      sectionLinks.forEach(link => {
+        if (link.getAttribute('data-section') === sectionId) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    // ==================== 章节导航功能结束 ====================
+
+    // ==================== 品牌切换功能 ====================
+    
+    function initializeBrandSwitcher() {
+      // 获取所有品牌切换按钮
+      const brandSwitchBtns = document.querySelectorAll('.brand-switch-btn');
+      
+      brandSwitchBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const brand = this.getAttribute('data-brand');
+          
+          // 更新所有章节的品牌按钮状态（联动）
+          const allBrandBtns = document.querySelectorAll('.brand-switch-btn');
+          allBrandBtns.forEach(b => {
+            if (b.getAttribute('data-brand') === brand) {
+              b.classList.add('active');
+            } else {
+              b.classList.remove('active');
+            }
+          });
+          
+          // 更新所有章节的品牌内容显示（联动）
+          const allBrandContents = document.querySelectorAll('.brand-content');
+          allBrandContents.forEach(content => {
+            if (content.getAttribute('data-brand-content') === brand) {
+              content.classList.add('active');
+            } else {
+              content.classList.remove('active');
+            }
+          });
+        });
+      });
+    }
+
+    // ==================== 品牌切换功能结束 ====================
+
   </script>
 </body>
 
